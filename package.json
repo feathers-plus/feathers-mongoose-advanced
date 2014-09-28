@@ -1,6 +1,6 @@
 {
   "name": "feathers-mongoose-advanced",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Create a flexible Mongoose Service for Featherjs.",
   "main": "lib/index.js",
   "repository": {
