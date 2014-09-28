@@ -27,17 +27,8 @@
     "url": "https://github.com/marshallswain/feathers-mongoose-advanced/issues"
   },
   "homepage": "https://github.com/marshallswain/feathers-mongoose-advanced",
-  "devDependencies": {
-    "mocha": "*",
-    "feathers": ">= 0.3.0 <= 1.1.0",
-    "mongoose": ">= 3.8.4 < 4"
-  },
   "dependencies": {
     "async": "~0.7.0"
-  },
-  "peerDependencies": {
-    "feathers": ">= 0.3.0 <= 1",
-    "mongoose": ">= 3.8.4 < 4"
   },
   "readmeFilename": "README.md"
 }
