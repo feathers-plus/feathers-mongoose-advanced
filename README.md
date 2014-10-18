@@ -142,6 +142,11 @@ The default find functionality includes a filter middleware that allows you to u
 GET /todos?%24limit=10&ingredients=salt // REST
 ```
 
+## Changelog
+
+### 0.0.4
+You no longer have to pass in an id on findOne.  If an id is present, the query will be executed as a findById().  All other params will be ignored.  If no id is present, the params.query object will be used in a findOne().
+
 ## License
 
 [MIT](LICENSE)
