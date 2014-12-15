@@ -1,7 +1,7 @@
 feathers-mongoose-advanced Service
 =========================
 
-[![NPM](https://nodei.co/npm/feathers-mongoose-service.png?downloads=true&stars=true)](https://nodei.co/npm/feathers-mongoose-service/)
+[![NPM](https://nodei.co/npm/feathers-mongoose-service.png?downloads=true&stars=true)](https://nodei.co/npm/feathers-mongoose-advanced/)
 
 
 > Create a flexible [Mongoose](http://mongoosejs.com/) Service for [Featherjs](https://github.com/feathersjs).
