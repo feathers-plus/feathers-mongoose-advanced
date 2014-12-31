@@ -1,6 +1,6 @@
 {
   "name": "feathers-mongoose-advanced",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Create a flexible Mongoose Service for FeathersJS.",
   "main": "lib/index.js",
   "repository": {
@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/marshallswain/feathers-mongoose-advanced",
   "dependencies": {
-    "async": "~0.7.0"
   },
   "readmeFilename": "README.md"
 }
