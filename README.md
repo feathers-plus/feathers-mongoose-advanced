@@ -44,14 +44,6 @@ var schema = new mongoose.Schema({
   userID: ObjectId
 });
 
-// Create a virtual field for id by copying _id.
-schema.virtual('id').get(function(){
-    return this._id.toHexString();
-});
-// Ensure virtual fields are serialised.
-schema.set('toJSON', {virtuals: true});
-schema.set('toObject', {virtuals: true});
-
 // External access to the model.
 var model = mongoose.model('Todo', schema);
 
