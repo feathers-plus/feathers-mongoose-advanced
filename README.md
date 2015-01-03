@@ -130,6 +130,6 @@ You no longer have to pass in an id on findOne.  If an id is present, the query 
 
 ## Author
 
-[Marshall Thompson](https://github.com/Glavin001)
+[Marshall Thompson](https://github.com/marshallswain)
 
 Based on [feathers-mongoose](https://github.com/feathersjs/feathers-mongoose) by [Glavin Wiechert](https://github.com/Glavin001)
