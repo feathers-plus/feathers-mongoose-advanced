@@ -35,7 +35,7 @@ Create a Mongoose model the same way that you normally would.  Here is an exampl
 
 var mongoose = require('mongoose'),
   ObjectId = mongoose.Schema.Types.ObjectId,
-  MongooseService = require('feathers-mongoose-advanced-service');
+  MongooseService = require('feathers-mongoose-advanced');
 
 // Set up the schema
 var schema = new mongoose.Schema({
