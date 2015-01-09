@@ -1,8 +1,8 @@
 {
   "name": "feathers-mongoose-advanced",
-  "version": "0.1.21",
+  "version": "0.1.3",
   "description": "Create a flexible Mongoose Service for FeathersJS.",
-  "main": "lib/index.js",
+  "main": "lib/feathers-mongoose-advanced.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/marshallswain/feathers-mongoose-advanced.git"
