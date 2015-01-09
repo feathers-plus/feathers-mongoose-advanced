@@ -44,11 +44,11 @@ var schema = new mongoose.Schema({
   userID: ObjectId
 });
 
-// External access to the model.
+// Setup the model.
 var model = mongoose.model('Todo', schema);
 
 // Provide access to the service.
-exports.service = new MongooseService(model);
+module.exports = new MongooseService(model);
 ```
 
 ### Use the Service
@@ -57,24 +57,28 @@ The service is now ready to be used by your feathers app:
 
 ```js
 // server.js
-
-var feathers = require('feathers');
-var mongoose = require('mongoose');
+var feathers = require('feathers'),
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose');
 
 // Connect to the MongoDB server.
 mongoose.connect('mongodb://localhost/feathers-example');
 
-// Bring in service.
-var todoService = require('./server/services/todos.js').service;
-
 // Create a feathers instance.
-var app = feathers();
-
-// Set up public directory
-app.use(feathers.static(__dirname + '/public'));
+var app = feathers()
+  // Setup the public folder.
+  .use(feathers.static(__dirname + '/public'));
+  // Enable Socket.io
+  .configure(feathers.socketio()) 
+  // Enable REST services
+  .configure(feathers.rest()); 
+  // Turn on JSON parser for REST services
+  .use(bodyParser.json())
+  // Turn on URL-encoded parser for REST services
+  .use(bodyParser.urlencoded({extended: true}))
 
 // Register services.
-app.use('todos', todoService);
+app.use('todos', require('./services/todos.js'));
 
 // Start the server.
 var port = 80;
@@ -115,6 +119,9 @@ Although it probably works well with most client-side frameworks, `mongoose-adva
 
 
 ## Changelog
+### 0.1.4
+* Various bug fixes.
+* Better examples in readme.md
 
 ### 0.1.0
 * `$select` support in a query allows you to pick which fields to include or exclude in the results.
