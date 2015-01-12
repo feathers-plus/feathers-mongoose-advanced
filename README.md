@@ -14,7 +14,7 @@ npm install feathers-mongoose-advanced --save
 
 ## Getting Started
 
-A feathers-mongoose-advanced service differs from a standard feathers-mongoose model in a couple of ways.
+A feathers-mongoose-advanced service differs from a standard feathers-mongoose model in a couple of ways:
 
 ### Full Access to Mongoose Schema Features
 
@@ -95,7 +95,7 @@ Now you can use the todos example from [feathersjs.com](http://feathersjs.com) a
 `feathers-mongoose-advanced` services comply with the standard [FeathersJS API](http://feathersjs.com/api/#).
 
 ### Virtual Field for id
-A virtual field will be set up on all service to automatically create an `id` out of each document's `_id`, so all documents will contain both an `id` and an `id` field.
+A virtual field will be set up on each service to automatically create an `id` out of each document's `_id`.  This means that all documents will contain both an `_id` and an `id` field.
 
 This is added as a convenience for working with client-side frameworks that watch for an `id` to be present on model data. You can turn this off by passing {noVirtualID:true} in the second argument when creating the service:
 
