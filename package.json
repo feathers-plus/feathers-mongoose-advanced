@@ -9,6 +9,7 @@
   },
   "keywords": [
     "feathers",
+    "feathers-plugin",
     "REST",
     "Socket.io",
     "realtime",
