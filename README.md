@@ -89,6 +89,116 @@ app.listen(port, function() {
 
 Now you can use the todos example from [feathersjs.com](http://feathersjs.com) and place it in the public directory.  Fire up the server and watch your todos persist in the database.
 
+## Using with the `feathers-hooks` plugin
+
+Here is an example service that uses `feathers-hooks`:
+
+```js
+// todos.js
+var mongoose = require('mongoose'),
+  ObjectId = mongoose.Schema.Types.ObjectId,
+  MongooseService = require('feathers-mongoose-advanced'),
+  hooks = require('../hook-library'),
+  events = require('../event-library');
+
+/**
+ * A hook that logs to the console for debugging.
+ * before or after
+ *
+ * find, get, create, update, delete
+ */
+var hooks = {
+  log : function(hook, next){
+    console.log(hook);
+    return next();
+  }
+};
+
+/* * * Create the schema * * */
+var schema = new mongoose.Schema({
+  description: String,
+  done: Boolean,
+  userID: ObjectId
+});
+
+module.exports = function(app){
+  /* * * Set up the url for this service * * */
+  var url = 'api/todos';
+
+  app.use(url, new MongooseService( mongoose.model('Todo', schema) ));
+
+  var service = app.service(url);
+
+  /* * * Set up 'before-update' hook * * */
+  service.before({
+    update: hooks.log
+  });
+
+  /* * * Set up 'after-find' hook * * */
+  service.after({
+    find: hooks.log
+  });
+
+
+  /* Example socket filter that requires auth to publish messages. */
+  var events = {
+    requireAuth: function(data, params, callback){
+      if (params.user && data.userID) {
+
+        // Admins get notifications
+        if (params.user.admin) {
+          callback(null, data);
+        }
+
+        // User gets own notifications
+        if (params.user._id == data.userID) {
+          callback(null, data);
+        }
+      }
+    }
+  };
+
+  /* * * Filter socket announcements * * */
+  service.created = service.updated = service.patched = service.removed = events.requireAuth;
+
+};
+
+```
+
+Then to use the service:
+
+```js
+// server.js
+var feathers = require('feathers'),
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose');
+
+// Connect to the MongoDB server.
+mongoose.connect('mongodb://localhost/feathers-example');
+
+// Create a feathers instance.
+var app = feathers()
+  // Setup the public folder.
+  .use(feathers.static(__dirname + '/public'));
+  // Enable Socket.io
+  .configure(feathers.socketio()) 
+  // Enable REST services
+  .configure(feathers.rest()); 
+  // Turn on JSON parser for REST services
+  .use(bodyParser.json())
+  // Turn on URL-encoded parser for REST services
+  .use(bodyParser.urlencoded({extended: true}))
+
+// Register services. Pass the app in to keep everything together.
+require('./todos')(app);
+
+// Start the server.
+var port = 80;
+app.listen(port, function() {
+  console.log('Feathers server listening on port ' + port);
+});
+```
+
 
 ## API
 
