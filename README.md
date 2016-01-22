@@ -1,8 +1,7 @@
-feathers-mongoose-advanced Service
+Deprecated: feathers-mongoose-advanced Service
 =========================
 
-[![NPM](https://nodei.co/npm/feathers-mongoose-advanced.png?downloads=true&stars=true)](https://nodei.co/npm/feathers-mongoose-advanced/)
-
+This plugin has been deprecated in favor of the new [feathers-mongoose](https://github.com/feathersjs/feathers-mongoose) plugin, which can now do everything that this plugin can.
 
 > Create a flexible [Mongoose](http://mongoosejs.com/) Service for [FeatherJS](https://github.com/feathersjs).
 
