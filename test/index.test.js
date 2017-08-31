@@ -29,14 +29,14 @@ const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
 const posts = app.service('posts');
 
-const sortAge = ({ data, failed }) => {
+const sortAge = (data) => {
   if (Array.isArray(data)) {
     // Order is not guaranteed so lets just order by age
     data = data.sort((a, b) => {
       return a.age < b.age;
     });
   }
-  return { data, failed };
+  return data;
 };
 
 let testApp;
@@ -142,11 +142,11 @@ describe('Feathers Mongoose Service', () => {
         }
       ])
       .then(sortAge)
-      .then(({ data, failed }) => {
+      .then(data => {
         expect(data).to.be.an('array');
-        let validationErrors = failed.filter(error => Object.keys(error)[0] === 'ValidationError');
-        expect(validationErrors.length).to.equal(2);
+        expect(data.length).to.equal(2);
         expect(data[0].name).to.equal('David');
+        expect(data[1].name).to.equal('Christopher');
       });
     });
 
@@ -157,7 +157,7 @@ describe('Feathers Mongoose Service', () => {
           age: 10
         }
       ])
-      .then(({ data, failed }) => {
+      .then(data => {
         _ids.David = data[0]._id;
         people.create([
           {
@@ -166,8 +166,7 @@ describe('Feathers Mongoose Service', () => {
             age: 20
           }
         ])
-        .then(({ data, failed }) => {
-          expect(Object.keys(failed[0])[0]).to.equal('WriteError');
+        .then(data => {
           expect(data).to.be.null;
           done();
         })
@@ -183,7 +182,7 @@ describe('Feathers Mongoose Service', () => {
           age: 10
         }
       ])
-      .then(({ data, failed }) => {
+      .then(data => {
         _ids.David = data[0]._id;
         people.create([
           {
@@ -200,12 +199,9 @@ describe('Feathers Mongoose Service', () => {
           }
         ])
         .then(sortAge)
-        .then(({ data, failed }) => {
-          let validationErrors = failed.filter(error => Object.keys(error)[0] === 'ValidationError');
-          let writeErrors = failed.filter(error => Object.keys(error)[0] === 'WriteError');
-          expect(validationErrors.length).to.equal(1);
-          expect(writeErrors.length).to.equal(1);
+        .then(data => {
           expect(data.length).to.equal(1);
+          expect(data[0].name).to.equal('Peter');
           done();
         })
         .catch(done);
@@ -225,8 +221,7 @@ describe('Feathers Mongoose Service', () => {
         }
       ])
       .then(sortAge)
-      .then(({ data, failed }) => {
-        expect(failed).to.be.null;
+      .then(data => {
         expect(data.length).to.equal(2);
         expect(data[0].name).to.equal('Peter');
         expect(data[1].name).to.equal('David');
