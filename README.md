@@ -1,251 +1,110 @@
-Deprecated: feathers-mongoose-advanced Service
-=========================
+feathers-mongoose
+================
 
-This plugin has been deprecated in favor of the new [feathers-mongoose](https://github.com/feathersjs/feathers-mongoose) plugin, which can now do everything that this plugin can.
+[![Greenkeeper badge](https://badges.greenkeeper.io/feathersjs/feathers-mongoose.svg)](https://greenkeeper.io/)
 
-> Create a flexible [Mongoose](http://mongoosejs.com/) Service for [FeatherJS](https://github.com/feathersjs).
+[![Build Status](https://travis-ci.org/feathersjs/feathers-mongoose.png?branch=master)](https://travis-ci.org/feathersjs/feathers-mongoose)
+[![Code Climate](https://codeclimate.com/github/feathersjs/feathers-mongoose/badges/gpa.svg)](https://codeclimate.com/github/feathersjs/feathers-mongoose)
+[![Test Coverage](https://codeclimate.com/github/feathersjs/feathers-mongoose/badges/coverage.svg)](https://codeclimate.com/github/feathersjs/feathers-mongoose/coverage)
+[![Dependency Status](https://img.shields.io/david/feathersjs/feathers-mongoose.svg?style=flat-square)](https://david-dm.org/feathersjs/feathers-mongoose)
+[![Download Status](https://img.shields.io/npm/dm/feathers-mongoose.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose)
+[![Slack Status](http://slack.feathersjs.com/badge.svg)](http://slack.feathersjs.com)
+
+
+> Create a [Mongoose](http://mongoosejs.com/) ORM wrapped service for [FeathersJS](https://github.com/feathersjs).
+
 
 ## Installation
 
 ```bash
-npm install feathers-mongoose-advanced --save
+npm install feathers-mongoose --save
 ```
+
+## Documentation
+
+Please refer to the [Feathers database adapter documentation](http://docs.feathersjs.com/databases/readme.html) for more details or directly at:
+
+- [Mongoose](http://docs.feathersjs.com/databases/mongoose.html) - The detailed documentation for this adapter
+- [Extending](http://docs.feathersjs.com/databases/extending.html) - How to extend a database adapter
+- [Pagination and Sorting](http://docs.feathersjs.com/databases/pagination.html) - How to use pagination and sorting for the database adapter
+- [Querying](http://docs.feathersjs.com/databases/querying.html) - The common adapter querying mechanism
 
 ## Getting Started
 
-A feathers-mongoose-advanced service differs from a standard feathers-mongoose model in a couple of ways:
-
-### Full Access to Mongoose Schema Features
-
-Because the Mongoose model must be created before setting up the service (as opposed to inline when using the standard feathers-mongoose service) you have complete control of Mongoose features, such as [virtual fields](http://mongoosejs.com/docs/guide.html) and [custom validators](http://mongoosejs.com/docs/validation.html).
-
-### Optimized for Client-side Frameworks
-
-To work better with client-side frameworks, such as [CanJS](www.canjs.com), out of the box, feathers-mongoose-advanced allows access to query options such as limit, skip, sort, and select by using `'$limit'`, `'$skip'`, `'$sort'`, and `'$select'` directly in the query object.
-
-
-
-## Example Usage: Todos Service
-
-Create a Mongoose model the same way that you normally would.  Here is an example todos service:
+Creating an Mongoose service is this simple (make sure your MongoDB server is up and running):
 
 ```js
-// ./server/services/todos.js
+var mongoose = require('mongoose');
+var MongooseModel = require('./models/mymodel')
+var mongooseService = require('feathers-mongoose');
 
-var mongoose = require('mongoose'),
-  ObjectId = mongoose.Schema.Types.ObjectId,
-  MongooseService = require('feathers-mongoose-advanced');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/feathers');
 
-// Set up the schema
-var schema = new mongoose.Schema({
-  description: String,
-  done: Boolean,
-  userID: ObjectId
-});
-
-// Setup the model.
-var model = mongoose.model('Todo', schema);
-
-// Provide access to the service.
-module.exports = new MongooseService(model);
+app.use('/todos', mongooseService({
+  Model: MongooseModel
+}));
 ```
 
-### Use the Service
+See the [Mongoose Guide](http://mongoosejs.com/docs/guide.html) for more information on defining your model.
 
-The service is now ready to be used by your feathers app:
+### Complete Example
+
+Here's a complete example of a Feathers server with a `message` mongoose-service.
 
 ```js
-// server.js
-var feathers = require('feathers'),
-  bodyParser = require('body-parser'),
-  mongoose = require('mongoose');
+const feathers = require('feathers');
+const rest = require('feathers-rest');
+const socketio = require('feathers-socketio');
+const errors = require('feathers-errors');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const service = require('feathers-mongoose');
 
-// Connect to the MongoDB server.
-mongoose.connect('mongodb://localhost/feathers-example');
+// Require your models
+const Message = require('./models/message');
+
+// Tell mongoose to use native promises
+// See http://mongoosejs.com/docs/promises.html
+mongoose.Promise = global.Promise;
+
+// Connect to your MongoDB instance(s)
+mongoose.connect('mongodb://localhost:27017/feathers');
+
 
 // Create a feathers instance.
-var app = feathers()
-  // Setup the public folder.
-  .use(feathers.static(__dirname + '/public'));
+const app = feathers()
   // Enable Socket.io
-  .configure(feathers.socketio()) 
+  .configure(socketio())
   // Enable REST services
-  .configure(feathers.rest()); 
+  .configure(rest())
   // Turn on JSON parser for REST services
   .use(bodyParser.json())
   // Turn on URL-encoded parser for REST services
-  .use(bodyParser.urlencoded({extended: true}))
+  .use(bodyParser.urlencoded({extended: true}));
 
-// Register services.
-app.use('todos', require('./services/todos.js'));
-
-// Start the server.
-var port = 80;
-app.listen(port, function() {
-	console.log('Feathers server listening on port ' + port);
-});
-```
-
-Now you can use the todos example from [feathersjs.com](http://feathersjs.com) and place it in the public directory.  Fire up the server and watch your todos persist in the database.
-
-## Using with the `feathers-hooks` plugin
-
-Here is an example service that uses `feathers-hooks`:
-
-```js
-// todos.js
-var mongoose = require('mongoose'),
-  ObjectId = mongoose.Schema.Types.ObjectId,
-  MongooseService = require('feathers-mongoose-advanced'),
-  hooks = require('../hook-library'),
-  events = require('../event-library');
-
-/**
- * A hook that logs to the console for debugging.
- * before or after
- *
- * find, get, create, update, delete
- */
-var hooks = {
-  log : function(hook, next){
-    console.log(hook);
-    return next();
+// Connect to the db, create and register a Feathers service.
+app.use('messages', service({,
+  Model: Message,
+  paginate: {
+    default: 2,
+    max: 4
   }
-};
+}));
 
-/* * * Create the schema * * */
-var schema = new mongoose.Schema({
-  description: String,
-  done: Boolean,
-  userID: ObjectId
-});
+// A basic error handler, just like Express
+app.use(errors.handler());
 
-module.exports = function(app){
-  /* * * Set up the url for this service * * */
-  var url = 'api/todos';
-
-  app.use(url, new MongooseService( mongoose.model('Todo', schema) ));
-
-  var service = app.service(url);
-
-  /* * * Set up 'before-update' hook * * */
-  service.before({
-    update: hooks.log
-  });
-
-  /* * * Set up 'after-find' hook * * */
-  service.after({
-    find: hooks.log
-  });
-
-
-  /* Example socket filter that requires auth to publish messages. */
-  var events = {
-    requireAuth: function(data, params, callback){
-      if (params.user && data.userID) {
-
-        // Admins get notifications
-        if (params.user.admin) {
-          callback(null, data);
-        }
-
-        // User gets own notifications
-        if (params.user._id == data.userID) {
-          callback(null, data);
-        }
-      }
-    }
-  };
-
-  /* * * Filter socket announcements * * */
-  service.created = service.updated = service.patched = service.removed = events.requireAuth;
-
-};
-
+app.listen(3030);
+console.log('Feathers Message mongoose service running on 127.0.0.1:3030');
 ```
 
-Then to use the service:
-
-```js
-// server.js
-var feathers = require('feathers'),
-  bodyParser = require('body-parser'),
-  mongoose = require('mongoose');
-
-// Connect to the MongoDB server.
-mongoose.connect('mongodb://localhost/feathers-example');
-
-// Create a feathers instance.
-var app = feathers()
-  // Setup the public folder.
-  .use(feathers.static(__dirname + '/public'));
-  // Enable Socket.io
-  .configure(feathers.socketio()) 
-  // Enable REST services
-  .configure(feathers.rest()); 
-  // Turn on JSON parser for REST services
-  .use(bodyParser.json())
-  // Turn on URL-encoded parser for REST services
-  .use(bodyParser.urlencoded({extended: true}))
-
-// Register services. Pass the app in to keep everything together.
-require('./todos')(app);
-
-// Start the server.
-var port = 80;
-app.listen(port, function() {
-  console.log('Feathers server listening on port ' + port);
-});
-```
-
-
-## API
-
-`feathers-mongoose-advanced` services comply with the standard [FeathersJS API](http://feathersjs.com/api/#).
-
-### Virtual Field for id
-A virtual field will be set up on each service to automatically create an `id` out of each document's `_id`.  This means that all documents will contain both an `_id` and an `id` field.
-
-This is added as a convenience for working with client-side frameworks that watch for an `id` to be present on model data. You can turn this off by passing {noVirtualID:true} in the second argument when creating the service:
-
-```js
-exports.service = new MongooseService(model, {noVirtualID:true});
-```
-
-### Special Query Params
-The `find` queries allow the use of `$limit`, `$skip`, `$sort`, and `$select` in the query.  These special MongoDB features can be passed directly inside the query object:
-
-```js
-// Find all recipes that include salt, limit to 10, only include name field.
-{"ingredients":"salt", "$limit":10, "$select":"name:1"} // JSON
-GET /?ingredients=salt&%24limit=10&%24select=name%3A1 // HTTP
-```
-
-As a result of allowing these to be put directly into the query string, you won't want to use `$limit`, `$skip`, `$sort`, or `$select` as the name of fields in your document/schema.
-
-### Working with Client-side Javascript Frameworks
-Although it probably works well with most client-side frameworks, `mongoose-advanced-service` was built with CanJS in mind.  If you're making a CanJS app, consider using the [canjs-feathers plugin](https://github.com/feathersjs/canjs-feathers).
-
-
-## Changelog
-### 0.1.4
-* Various bug fixes.
-* Better examples in readme.md
-
-### 0.1.0
-* `$select` support in a query allows you to pick which fields to include or exclude in the results.
-* A virtual field for `id` is automatically added to every service.
-* Removed support for filters in favor of using [feathers-hooks](https://www.npmjs.com/package/feathers-hooks).
-
-### 0.0.4
-You no longer have to pass in an id on findOne.  If an id is present, the query will be executed as a findById().  All other params will be ignored.  If no id is present, the params.query object will be used in a findOne().
+You can run this example by using `npm start` and going to [localhost:3030/messages](http://localhost:3030/messages). You should see an empty array. That's because you don't have any messages yet but you now have full CRUD for your new message service, including mongoose validations!
 
 ## License
 
 [MIT](LICENSE)
 
-## Author
+## Authors
 
-[Marshall Thompson](https://github.com/marshallswain)
-
-Based on [feathers-mongoose](https://github.com/feathersjs/feathers-mongoose) by [Glavin Wiechert](https://github.com/Glavin001)
+- [Feathers contributors](https://github.com/feathersjs/feathers-mongoose/graphs/contributors)

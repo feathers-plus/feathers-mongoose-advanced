@@ -1,12 +1,9 @@
 {
-  "name": "feathers-mongoose-advanced",
-  "version": "0.1.7",
-  "description": "Create a flexible Mongoose Service for FeathersJS.",
-  "main": "lib/feathers-mongoose-advanced.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/marshallswain/feathers-mongoose-advanced.git"
-  },
+  "name": "feathers-mongoose",
+  "description": "A Feathers service adapter for the Mongoose ORM",
+  "version": "5.1.0",
+  "homepage": "https://github.com/feathersjs/feathers-mongoose",
+  "main": "lib/",
   "keywords": [
     "feathers",
     "feathers-plugin",
@@ -18,17 +15,70 @@
     "mongoose",
     "service"
   ],
-  "author": {
-    "name": "Marshall Thompson",
-    "email": "marshall@creativeideal.net",
-    "url": "https://github.com/marshallswain"
-  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feathersjs/feathers-mongoose.git"
+  },
+  "author": {
+    "name": "Feathers contributors",
+    "email": "hello@feathersjs.com",
+    "url": "https://feathersjs.com"
+  },
+  "contributors": [
+    "Eric Kryski <e.kryski@gmail.com> (http://erickryski.com)",
+    "Glavin Wiechert <glavin.wiechert@gmail.com> (https://github.com/Glavin001)",
+    "Marshall Thompson <marshall@creativeideal.net> (https://github.com/marshallswain)"
+  ],
   "bugs": {
-    "url": "https://github.com/marshallswain/feathers-mongoose-advanced/issues"
+    "url": "https://github.com/feathersjs/feathers-mongoose/issues"
   },
-  "homepage": "https://github.com/marshallswain/feathers-mongoose-advanced",
+  "engines": {
+    "node": ">= 4"
+  },
+  "scripts": {
+    "publish": "git push origin --tags && npm run changelog && git push origin",
+    "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish",
+    "start": "node example/app",
+    "lint": "semistandard --fix",
+    "mocha": "mocha --opts mocha.opts",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
+    "test": "npm run lint && npm run coverage"
+  },
+  "semistandard": {
+    "env": [
+      "mocha"
+    ]
+  },
+  "directories": {
+    "lib": "lib"
+  },
   "dependencies": {
+    "feathers-commons": "^0.8.4",
+    "feathers-errors": "^2.0.1",
+    "feathers-query-filters": "^2.1.2",
+    "lodash.isequal": "^4.5.0",
+    "lodash.omit": "^4.3.0",
+    "uberproto": "^1.2.0"
   },
-  "readmeFilename": "README.md"
+  "devDependencies": {
+    "body-parser": "^1.14.1",
+    "chai": "^4.0.0",
+    "eslint-if-supported": "^1.0.1",
+    "feathers": "^2.0.0",
+    "feathers-hooks": "^2.0.0",
+    "feathers-rest": "^1.5.2",
+    "feathers-service-tests": "^0.10.0",
+    "feathers-socketio": "^2.0.0",
+    "istanbul": "^1.1.0-alpha.1",
+    "mocha": "^3.0.0",
+    "mongoose": "^4.10.4",
+    "rimraf": "^2.5.2",
+    "semistandard": "^11.0.0",
+    "sinon": "^2.0.0",
+    "sinon-chai": "^2.8.0"
+  }
 }
