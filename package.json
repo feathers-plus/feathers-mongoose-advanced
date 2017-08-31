@@ -1,8 +1,8 @@
 {
-  "name": "feathers-mongoose",
+  "name": "feathers-mongoose-advanced",
   "description": "A Feathers service adapter for the Mongoose ORM",
-  "version": "5.1.0",
-  "homepage": "https://github.com/feathersjs/feathers-mongoose",
+  "version": "1.0.0",
+  "homepage": "https://github.com/feathersjs/feathers-mongoose-advanced",
   "main": "lib/",
   "keywords": [
     "feathers",
@@ -18,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/feathersjs/feathers-mongoose.git"
+    "url": "git://github.com/feathersjs/feathers-mongoose-advanced.git"
   },
   "author": {
     "name": "Feathers contributors",
@@ -28,10 +28,11 @@
   "contributors": [
     "Eric Kryski <e.kryski@gmail.com> (http://erickryski.com)",
     "Glavin Wiechert <glavin.wiechert@gmail.com> (https://github.com/Glavin001)",
+    "Matt Chaffe <matt@ideajunction.uk> (https://github.com/Mattchewone)",
     "Marshall Thompson <marshall@creativeideal.net> (https://github.com/marshallswain)"
   ],
   "bugs": {
-    "url": "https://github.com/feathersjs/feathers-mongoose/issues"
+    "url": "https://github.com/feathersjs/feathers-mongoose-advanced/issues"
   },
   "engines": {
     "node": ">= 4"
