@@ -29,14 +29,14 @@ const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
 const posts = app.service('posts');
 
-const sortAge = (items) => {
-  if (Array.isArray(items[1])) {
+const sortAge = ({ data, failed }) => {
+  if (Array.isArray(data)) {
     // Order is not guaranteed so lets just order by age
-    items[1] = items[1].sort((a, b) => {
-      return a.age > b.age;
+    data = data.sort((a, b) => {
+      return a.age < b.age;
     });
   }
-  return items;
+  return { data, failed };
 };
 
 let testApp;
@@ -157,8 +157,8 @@ describe('Feathers Mongoose Service', () => {
           age: 10
         }
       ])
-      .then(user => {
-        _ids.David = user.data[1][0]._id;
+      .then(({ data, failed }) => {
+        _ids.David = data[0]._id;
         people.create([
           {
             _id: _ids.David,
@@ -183,8 +183,8 @@ describe('Feathers Mongoose Service', () => {
           age: 10
         }
       ])
-      .then(person => {
-        _ids.David = person.data[1][0]._id;
+      .then(({ data, failed }) => {
+        _ids.David = data[0]._id;
         people.create([
           {
             _id: _ids.David,
@@ -228,8 +228,8 @@ describe('Feathers Mongoose Service', () => {
       .then(({ data, failed }) => {
         expect(failed).to.be.null;
         expect(data.length).to.equal(2);
-        expect(data[0].name).to.equal('David');
-        expect(data[1].name).to.equal('Peter');
+        expect(data[0].name).to.equal('Peter');
+        expect(data[1].name).to.equal('David');
         done();
       })
       .catch(done);
