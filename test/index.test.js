@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-expressions */
 
-import { expect } from 'chai';
-import { base, example } from 'feathers-service-tests';
-import errors from 'feathers-errors';
-import feathers from 'feathers';
-import service, { hooks, Service } from '../src';
-import server from './test-app';
-import { User, Pet, Peeps, CustomPeeps, Post, TextPost } from './models';
+const { expect } = require('chai');
+const { base, example } = require('feathers-service-tests');
+const errors = require('feathers-errors');
+const feathers = require('feathers');
+const service = require('../lib');
+const { hooks, Service } = require('../lib');
+const server = require('./test-app');
+const { User, Pet, Peeps, CustomPeeps, Post, TextPost } = require('./models');
 
 const _ids = {};
 const _petIds = {};
@@ -141,12 +142,11 @@ describe('Feathers Mongoose Service', () => {
         }
       ])
       .then(sortAge)
-      .then(result => {
-        let [errors, users] = result.data;
-        expect(users).to.be.an('array');
-        let validationErrors = errors.filter(error => Object.keys(error)[0] === 'ValidationError');
+      .then(({ data, failed }) => {
+        expect(data).to.be.an('array');
+        let validationErrors = failed.filter(error => Object.keys(error)[0] === 'ValidationError');
         expect(validationErrors.length).to.equal(2);
-        expect(users[0].name).to.equal('David');
+        expect(data[0].name).to.equal('David');
       });
     });
 
@@ -166,10 +166,9 @@ describe('Feathers Mongoose Service', () => {
             age: 20
           }
         ])
-        .then(result => {
-          let [errors, users] = result.data;
-          expect(Object.keys(errors[0])[0]).to.equal('WriteError');
-          expect(users).to.be.null;
+        .then(({ data, failed }) => {
+          expect(Object.keys(failed[0])[0]).to.equal('WriteError');
+          expect(data).to.be.null;
           done();
         })
         .catch(done);
@@ -201,13 +200,12 @@ describe('Feathers Mongoose Service', () => {
           }
         ])
         .then(sortAge)
-        .then(result => {
-          let [errors, users] = result.data;
-          let validationErrors = errors.filter(error => Object.keys(error)[0] === 'ValidationError');
-          let writeErrors = errors.filter(error => Object.keys(error)[0] === 'WriteError');
+        .then(({ data, failed }) => {
+          let validationErrors = failed.filter(error => Object.keys(error)[0] === 'ValidationError');
+          let writeErrors = failed.filter(error => Object.keys(error)[0] === 'WriteError');
           expect(validationErrors.length).to.equal(1);
           expect(writeErrors.length).to.equal(1);
-          expect(users.length).to.equal(1);
+          expect(data.length).to.equal(1);
           done();
         })
         .catch(done);
@@ -227,12 +225,11 @@ describe('Feathers Mongoose Service', () => {
         }
       ])
       .then(sortAge)
-      .then(result => {
-        let [errors, users] = result.data;
-        expect(errors).to.be.null;
-        expect(users.length).to.equal(2);
-        expect(users[0].name).to.equal('David');
-        expect(users[1].name).to.equal('Peter');
+      .then(({ data, failed }) => {
+        expect(failed).to.be.null;
+        expect(data.length).to.equal(2);
+        expect(data[0].name).to.equal('David');
+        expect(data[1].name).to.equal('Peter');
         done();
       })
       .catch(done);
