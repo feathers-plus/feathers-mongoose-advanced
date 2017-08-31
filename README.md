@@ -18,6 +18,8 @@ With the current feathers-mongoose adapter, when you pass 100 items to `create` 
 records are inserted and the rest fail.  This plugin returns a success response when a record is inserted, but pushes errored records into
 `params.errors[]`.  You can handle those in an after hook at `hook.params.errors`.
 
+**This adapter drops support for Node.js V4.**
+
 ## Installation
 
 ```bash
