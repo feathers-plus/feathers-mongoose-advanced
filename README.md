@@ -1,23 +1,27 @@
-feathers-mongoose
+feathers-mongoose-advanced
 ================
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/feathersjs/feathers-mongoose.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/marshallswain/feathers-mongoose-advanced.svg)](https://greenkeeper.io/)
 
-[![Build Status](https://travis-ci.org/feathersjs/feathers-mongoose.png?branch=master)](https://travis-ci.org/feathersjs/feathers-mongoose)
-[![Code Climate](https://codeclimate.com/github/feathersjs/feathers-mongoose/badges/gpa.svg)](https://codeclimate.com/github/feathersjs/feathers-mongoose)
-[![Test Coverage](https://codeclimate.com/github/feathersjs/feathers-mongoose/badges/coverage.svg)](https://codeclimate.com/github/feathersjs/feathers-mongoose/coverage)
-[![Dependency Status](https://img.shields.io/david/feathersjs/feathers-mongoose.svg?style=flat-square)](https://david-dm.org/feathersjs/feathers-mongoose)
-[![Download Status](https://img.shields.io/npm/dm/feathers-mongoose.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose)
+[![Build Status](https://travis-ci.org/marshallswain/feathers-mongoose-advanced.png?branch=master)](https://travis-ci.org/marshallswain/feathers-mongoose-advanced)
+[![Code Climate](https://codeclimate.com/github/marshallswain/feathers-mongoose-advanced/badges/gpa.svg)](https://codeclimate.com/github/marshallswain/feathers-mongoose-advanced)
+[![Test Coverage](https://codeclimate.com/github/marshallswain/feathers-mongoose-advanced/badges/coverage.svg)](https://codeclimate.com/github/marshallswain/feathers-mongoose-advanced/coverage)
+[![Dependency Status](https://img.shields.io/david/marshallswain/feathers-mongoose-advanced.svg?style=flat-square)](https://david-dm.org/marshallswain/feathers-mongoose-advanced)
+[![Download Status](https://img.shields.io/npm/dm/feathers-mongoose-advanced.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose-advanced)
 [![Slack Status](http://slack.feathersjs.com/badge.svg)](http://slack.feathersjs.com)
 
 
 > Create a [Mongoose](http://mongoosejs.com/) ORM wrapped service for [FeathersJS](https://github.com/feathersjs).
 
+This Feathers service adapter is the same as the `feathers-mongoose` adapter, but includes optimizations for handling bulk insertion of data.
+With the current feathers-mongoose adapter, when you pass 100 items to `create` and the 51st record is invalid, the first 50
+records are inserted and the rest fail.  This plugin returns a success response when a record is inserted, but pushes errored records into
+`params.errors[]`.  You can handle those in an after hook at `hook.params.errors`.
 
 ## Installation
 
 ```bash
-npm install feathers-mongoose --save
+npm install feathers-mongoose-advanced --save
 ```
 
 ## Documentation
@@ -36,7 +40,7 @@ Creating an Mongoose service is this simple (make sure your MongoDB server is up
 ```js
 var mongoose = require('mongoose');
 var MongooseModel = require('./models/mymodel')
-var mongooseService = require('feathers-mongoose');
+var mongooseService = require('feathers-mongoose-advanced');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/feathers');
@@ -59,7 +63,7 @@ const socketio = require('feathers-socketio');
 const errors = require('feathers-errors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const service = require('feathers-mongoose');
+const service = require('feathers-mongoose-advanced');
 
 // Require your models
 const Message = require('./models/message');
@@ -107,4 +111,4 @@ You can run this example by using `npm start` and going to [localhost:3030/messa
 
 ## Authors
 
-- [Feathers contributors](https://github.com/feathersjs/feathers-mongoose/graphs/contributors)
+- [Feathers contributors](https://github.com/marshallswain/feathers-mongoose-advanced/graphs/contributors)
