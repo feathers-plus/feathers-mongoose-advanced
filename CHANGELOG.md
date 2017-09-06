@@ -1,5 +1,8 @@
 # Change Log
 
+## [v2.0.4](https://github.com/marshallswain/feathers-mongoose-advanced/tree/v2.0.4) (2017-09-06)
+[Full Changelog](https://github.com/marshallswain/feathers-mongoose-advanced/compare/v2.0.3...v2.0.4)
+
 ## [v2.0.3](https://github.com/marshallswain/feathers-mongoose-advanced/tree/v2.0.3) (2017-09-06)
 [Full Changelog](https://github.com/marshallswain/feathers-mongoose-advanced/compare/v2.0.2...v2.0.3)
 
