@@ -123,6 +123,17 @@ describe('Feathers Mongoose Service', () => {
       return people.remove(null, { query: {} });
     });
 
+    it('can handles empty arrays', function () {
+      return people.create([])
+      .then(data => {
+        throw new Error('Create should not be successful');
+      })
+      .catch(error => {
+        expect(error.name).to.equal('BadRequest');
+        expect(error.message).to.equal('Cannot pass empty array to create.');
+      });
+    });
+
     it('can return all validation errors', function () {
       return people.create([
         {

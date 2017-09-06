@@ -14,9 +14,9 @@ feathers-mongoose-advanced
 > Create a [Mongoose](http://mongoosejs.com/) ORM wrapped service for [FeathersJS](https://github.com/feathersjs).
 
 This Feathers service adapter is the same as the `feathers-mongoose` adapter, but includes optimizations for handling bulk insertion of data.
-With the current feathers-mongoose adapter, when you pass 100 items to `create` and the 51st record is invalid, the first 50
-records are inserted and the rest fail.  This plugin returns a success response when a record is inserted, but pushes errored records into
-`params.errors[]`.  You can handle those in an after hook at `hook.params.errors`.
+With the current feathers-mongoose adapter, when you pass 100 items to `create` and 1 or more have errors either with validation or write errors (duplicate `_id`) you will only get back the first error and this will throw and skip any after hooks.  
+This plugin returns a success response when a record is inserted, but pushes errored records into
+`params.errors[]`.  You can handle those in an after hook at `hook.params.errors`. Even with errors, the after hooks will be run as all the items with errors will be present in `params.errors[]`.
 
 **This adapter drops support for Node.js V4.**
 
