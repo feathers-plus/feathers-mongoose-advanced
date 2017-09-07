@@ -178,7 +178,8 @@ describe('Feathers Mongoose Service', () => {
           }
         ])
         .then(data => {
-          expect(data).to.be.null;
+          expect(data).to.be.an('array');
+          expect(data.length).to.equal(0);
           done();
         })
         .catch(done);
