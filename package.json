@@ -1,7 +1,7 @@
 {
   "name": "feathers-mongoose-advanced",
   "description": "A Feathers service adapter for the Mongoose ORM",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "homepage": "https://github.com/feathers-plus/feathers-mongoose-advanced",
   "main": "lib/",
   "keywords": [
