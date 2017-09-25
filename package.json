@@ -2,7 +2,7 @@
   "name": "feathers-mongoose-advanced",
   "description": "A Feathers service adapter for the Mongoose ORM",
   "version": "2.1.0",
-  "homepage": "https://github.com/feathersjs/feathers-mongoose-advanced",
+  "homepage": "https://github.com/feathers-plus/feathers-mongoose-advanced",
   "main": "lib/",
   "keywords": [
     "feathers",
@@ -18,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/feathersjs/feathers-mongoose-advanced.git"
+    "url": "git://github.com/feathers-plus/feathers-mongoose-advanced.git"
   },
   "author": {
     "name": "Feathers contributors",
@@ -32,7 +32,7 @@
     "Marshall Thompson <marshall@creativeideal.net> (https://github.com/marshallswain)"
   ],
   "bugs": {
-    "url": "https://github.com/feathersjs/feathers-mongoose-advanced/issues"
+    "url": "https://github.com/feathers-plus/feathers-mongoose-advanced/issues"
   },
   "engines": {
     "node": ">= 4"
