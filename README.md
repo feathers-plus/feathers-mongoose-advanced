@@ -1,12 +1,12 @@
 feathers-mongoose-advanced
 ================
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/marshallswain/feathers-mongoose-advanced.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/feathers-plus/feathers-mongoose-advanced.svg)](https://greenkeeper.io/)
 
-[![Build Status](https://travis-ci.org/marshallswain/feathers-mongoose-advanced.png?branch=master)](https://travis-ci.org/marshallswain/feathers-mongoose-advanced)
-[![Code Climate](https://codeclimate.com/github/marshallswain/feathers-mongoose-advanced/badges/gpa.svg)](https://codeclimate.com/github/marshallswain/feathers-mongoose-advanced)
-[![Test Coverage](https://codeclimate.com/github/marshallswain/feathers-mongoose-advanced/badges/coverage.svg)](https://codeclimate.com/github/marshallswain/feathers-mongoose-advanced/coverage)
-[![Dependency Status](https://img.shields.io/david/marshallswain/feathers-mongoose-advanced.svg?style=flat-square)](https://david-dm.org/marshallswain/feathers-mongoose-advanced)
+[![Build Status](https://travis-ci.org/feathers-plus/feathers-mongoose-advanced.png?branch=master)](https://travis-ci.org/feathers-plus/feathers-mongoose-advanced)
+[![Code Climate](https://codeclimate.com/github/feathers-plus/feathers-mongoose-advanced/badges/gpa.svg)](https://codeclimate.com/github/feathers-plus/feathers-mongoose-advanced)
+[![Test Coverage](https://codeclimate.com/github/feathers-plus/feathers-mongoose-advanced/badges/coverage.svg)](https://codeclimate.com/github/feathers-plus/feathers-mongoose-advanced/coverage)
+[![Dependency Status](https://img.shields.io/david/feathers-plus/feathers-mongoose-advanced.svg?style=flat-square)](https://david-dm.org/feathers-plus/feathers-mongoose-advanced)
 [![Download Status](https://img.shields.io/npm/dm/feathers-mongoose-advanced.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose-advanced)
 [![Slack Status](http://slack.feathersjs.com/badge.svg)](http://slack.feathersjs.com)
 
@@ -14,7 +14,7 @@ feathers-mongoose-advanced
 > Create a [Mongoose](http://mongoosejs.com/) ORM wrapped service for [FeathersJS](https://github.com/feathersjs).
 
 This Feathers service adapter is the same as the `feathers-mongoose` adapter, but includes optimizations for handling bulk insertion of data.
-With the current feathers-mongoose adapter, when you pass 100 items to `create` and 1 or more have errors either with validation or write errors (duplicate `_id`) you will only get back the first error and this will throw and skip any after hooks.  
+With the current feathers-mongoose adapter, when you pass 100 items to `create` and 1 or more have errors either with validation or write errors (duplicate `_id`) you will only get back the first error and this will throw and skip any after hooks.
 This plugin returns a success response when a record is inserted, but pushes errored records into
 `params.errors[]`.  You can handle those in an after hook at `hook.params.errors`. Even with errors, the after hooks will be run as all the items with errors will be present in `params.errors[]`.
 
@@ -113,4 +113,4 @@ You can run this example by using `npm start` and going to [localhost:3030/messa
 
 ## Authors
 
-- [Feathers contributors](https://github.com/marshallswain/feathers-mongoose-advanced/graphs/contributors)
+- [Feathers contributors](https://github.com/feathers-plus/feathers-mongoose-advanced/graphs/contributors)
