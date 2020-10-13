@@ -1,15 +1,7 @@
 feathers-mongoose-advanced
 ================
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/feathers-plus/feathers-mongoose-advanced.svg)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.org/feathers-plus/feathers-mongoose-advanced.png?branch=master)](https://travis-ci.org/feathers-plus/feathers-mongoose-advanced)
-[![Code Climate](https://codeclimate.com/github/feathers-plus/feathers-mongoose-advanced/badges/gpa.svg)](https://codeclimate.com/github/feathers-plus/feathers-mongoose-advanced)
-[![Test Coverage](https://codeclimate.com/github/feathers-plus/feathers-mongoose-advanced/badges/coverage.svg)](https://codeclimate.com/github/feathers-plus/feathers-mongoose-advanced/coverage)
-[![Dependency Status](https://img.shields.io/david/feathers-plus/feathers-mongoose-advanced.svg?style=flat-square)](https://david-dm.org/feathers-plus/feathers-mongoose-advanced)
-[![Download Status](https://img.shields.io/npm/dm/feathers-mongoose-advanced.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose-advanced)
-[![Slack Status](http://slack.feathersjs.com/badge.svg)](http://slack.feathersjs.com)
-
+> __This project is no longer maintained. Use [feathers-mongoose](https://github.com/feathersjs-ecosystem/feathers-mongoose/) instead__
 
 > Create a [Mongoose](http://mongoosejs.com/) ORM wrapped service for [FeathersJS](https://github.com/feathersjs).
 
